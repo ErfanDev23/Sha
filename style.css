@@ -106,7 +106,7 @@ nav a:hover,nav a.active{color:var(--ne);background:var(--gl)}
 .cdi p{color:var(--mu);font-size:.72rem}
 
 /* ============================================================
-   📊 STATS PAGE (صفحه جدا)
+   📊 STATS PAGE
 ============================================================ */
 .stats-page{max-width:1000px;margin:0 auto}
 .stats-widget-full{
@@ -490,10 +490,12 @@ footer{background:var(--bg2);border-top:1px solid var(--bd);padding:50px 5% 25px
 .toast.error{border-color:var(--dg);color:var(--dg)}
 .toast.warning{border-color:var(--wn);color:var(--wn)}
 
-/* ===== NOTIF ===== */
-.np{position:fixed;top:75px;left:5%;width:340px;max-width:90vw;background:var(--bg2);border:1px solid var(--bd);border-radius:16px;padding:18px;box-shadow:0 10px 40px rgba(0,0,0,.3);z-index:150;max-height:480px;overflow-y:auto;transform:translateY(-15px);opacity:0;visibility:hidden;transition:.3s}
-.np.show{transform:translateY(0);opacity:1;visibility:visible}
-.np h4{margin-bottom:12px;color:var(--ne);font-size:.9rem}
+/* ============================================================
+   🔔 NOTIF — فقط با id انتخاب می‌شود تا با .page.np تداخل نکند
+============================================================ */
+#np{position:fixed;top:75px;left:5%;width:340px;max-width:90vw;background:var(--bg2);border:1px solid var(--bd);border-radius:16px;padding:18px;box-shadow:0 10px 40px rgba(0,0,0,.3);z-index:150;max-height:480px;overflow-y:auto;transform:translateY(-15px);opacity:0;visibility:hidden;transition:.3s}
+#np.show{transform:translateY(0);opacity:1;visibility:visible}
+#np h4{margin-bottom:12px;color:var(--ne);font-size:.9rem}
 .ni{padding:11px 14px;border-radius:10px;background:var(--gl);margin-bottom:6px;border-right:3px solid var(--ne);font-size:.82rem;cursor:pointer;transition:.3s}
 .ni.un{border-right-color:var(--wn);background:rgba(255,181,71,.06)}
 .ni p{color:var(--mu);font-size:.72rem;margin-top:4px}
@@ -659,7 +661,7 @@ footer{background:var(--bg2);border-top:1px solid var(--bd);padding:50px 5% 25px
   .qop{padding:14px 16px;font-size:.88rem}
   .rc{width:140px;height:140px;font-size:1.9rem}
 
-  .np{top:65px;left:8px;right:8px;width:auto;max-width:none}
+  #np{top:65px;left:8px;right:8px;width:auto;max-width:none}
   .so{padding:70px 12px 30px}
   .sbx{padding:18px}
   .si{font-size:.95rem;padding:14px 18px}
@@ -674,4 +676,4 @@ footer{background:var(--bg2);border-top:1px solid var(--bd);padding:50px 5% 25px
   .hero h1{font-size:1.6rem!important}
   .mn-label{font-size:.62rem}
   .mn-icon{font-size:1.15rem}
-}
+          }
