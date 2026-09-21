@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=yes">
+<meta name="theme-color" content="#0a0616">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>دکتر علیرضا احمدیان | آکادمی زیست‌شناسی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="dark">
+
+<div class="loader" id="loader"><div class="ldi">🧬</div><div class="ldb"><div class="ldf"></div></div></div>
+<div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+
+<header id="header">
+  <div class="logo" onclick="goPage('home')">دکتر علیرضا احمدیان<span>.</span></div>
+  <nav id="nav">
+    <ul>
+      <li><a data-page="home" onclick="goPage('home')">🏠 خانه</a></li>
+      <li><a data-page="courses" onclick="goPage('courses')">📚 دوره‌ها</a></li>
+      <li><a data-page="videos" onclick="goPage('videos')">🎬 ویدیوها</a></li>
+      <li><a data-page="pdfs" onclick="goPage('pdfs')">📄 جزوه‌ها</a></li>
+      <li><a data-page="quizzes" onclick="goPage('quizzes')">📝 آزمون‌ها</a></li>
+      <li><a data-page="blog" onclick="goPage('blog')">📖 وبلاگ</a></li>
+      <li><a data-page="stats" onclick="goPage('stats')">📊 آمار</a></li>
+      <li><a data-page="faq" onclick="goPage('faq')">❓ سوالات</a></li>
+      <li><a data-page="about" onclick="goPage('about')">👨‍🏫 درباره</a></li>
+      <li><a data-page="contact" onclick="goPage('contact')">📞 تماس</a></li>
+    </ul>
+  </nav>
+  <div class="hb">
+    <button class="ib" onclick="openSearch()" title="جستجو">🔍</button>
+    <button class="ib" onclick="toggleNotif()" title="اعلان‌ها">🔔<span class="bdot" id="ndot" style="display:none"></span></button>
+    <button class="ib" onclick="openCart()" title="سبد خرید">🛒<span class="ccount" id="cartCount" style="display:none">0</span></button>
+    <button class="bl" id="abtn" onclick="authClick()">🔐 ورود</button>
+    <button class="mt" onclick="tglMenu()">☰</button>
+  </div>
+</header>
+
+<div class="co2" id="cartOv" onclick="closeCart()"></div>
+<aside class="cs" id="cartSb">
+  <div class="ch"><h3>🛒 سبد خرید <span class="ctc" id="cartHc">(0 آیتم)</span></h3><button class="cc" onclick="closeCart()">✕</button></div>
+  <div class="cit" id="cartItems"></div>
+  <div class="cf" id="cartFt" style="display:none">
+    <div class="csb"><span>جمع کل:</span><span id="cartSub">۰ تومان</span></div>
+    <div class="csb tt"><span>قابل پرداخت:</span><span class="tp" id="cartTot">۰ تومان</span></div>
+    <button class="btn bp bbl" onclick="goCheckout()">💳 تکمیل خرید</button>
+    <button class="btn bg bbl" onclick="closeCart();goPage('courses')">ادامه خرید</button>
+  </div>
+</aside>
+
+<div class="np" id="np"><h4>🔔 اعلان‌ها</h4><div id="nlist"></div></div>
+
+<div class="so" id="so" onclick="if(event.target===this)closeSearch()">
+  <div class="sbx">
+    <input class="si" id="si" placeholder="🔍 جستجو..." oninput="doSearch()" autocomplete="off">
+    <div class="sr" id="sr"><div class="se">شروع به تایپ کنید...</div></div>
+  </div>
+</div>
+
+<!-- ============ HOME (بدون آمار) ============ -->
+<div class="page active hero" id="page-home">
+  <div class="hc">
+    <div class="badge">🧬 آکادمی زیست‌شناسی دکتر علیرضا احمدیان</div>
+    <h1>زیست رو<br><span class="gr2">عمیق یاد بگیر</span></h1>
+    <p>با تدریس تخصصی زیست‌شناسی کنکور، دوره‌های آموزشی، ویدیوها و آزمون‌های استاندارد، کنارت هستیم تا در درس زیست به بهترین نتیجه برسی.</p>
+    <div class="hbtns">
+      <button class="btn bp" onclick="goPage('courses')">📚 مشاهده دوره‌ها</button>
+      <button class="btn bg" onclick="goPage('videos')">🎬 ویدیوهای رایگان</button>
+    </div>
+    <div class="stats">
+      <div class="stat"><h3>+۵۰</h3><p>دوره تخصصی</p></div>
+      <div class="stat"><h3>+۵۰۰۰</h3><p>دانشجو</p></div>
+      <div class="stat"><h3>۹۸٪</h3><p>رضایت</p></div>
+      <div class="stat"><h3>۲۴/۷</h3><p>پشتیبانی</p></div>
+    </div>
+    <div class="cd">
+      <div class="cdi"><h4 id="cd1">--</h4><p>روز</p></div>
+      <div class="cdi"><h4 id="cd2">--</h4><p>ساعت</p></div>
+      <div class="cdi"><h4 id="cd3">--</h4><p>دقیقه</p></div>
+      <div class="cdi"><h4 id="cd4">--</h4><p>ثانیه</p></div>
+    </div>
+    <p style="color:var(--mu);font-size:.8rem;margin-top:8px" id="klabel">تا کنکور</p>
+  </div>
+  <div style="margin-top:80px">
+    <div class="st rev"><h2>چرا <span class="gr">دکتر علیرضا احمدیان</span>؟</h2></div>
+    <div class="grid">
+      <div class="card feat rev"><span class="ic">🧬</span><h3>متخصص زیست</h3><p>تدریس تخصصی زیست کنکور</p></div>
+      <div class="card feat rev"><span class="ic">🎬</span><h3>ویدیو باکیفیت</h3><p>آموزش تصویری Full HD</p></div>
+      <div class="card feat rev"><span class="ic">📝</span><h3>آزمون استاندارد</h3><p>با کارنامه و تحلیل</p></div>
+      <div class="card feat rev"><span class="ic">📄</span><h3>جزوه اختصاصی</h3><p>PDF تالیفی زیست</p></div>
+      <div class="card feat rev"><span class="ic">🎓</span><h3>گواهی پایان</h3><p>معتبر پس از اتمام</p></div>
+      <div class="card feat rev"><span class="ic">💬</span><h3>پشتیبانی فعال</h3><p>پاسخ ۲۴ ساعته</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ COURSES ============ -->
+<div class="page" id="page-courses">
+  <div class="ph"><h1>دوره‌های <span class="gr">زیست‌شناسی</span></h1><p>دوره‌های تخصصی زیست کنکور، پایه تا پیشرفته.</p></div>
+  <div class="grid" id="coursesGrid"></div>
+</div>
+
+<!-- ============ VIDEOS ============ -->
+<div class="page" id="page-videos">
+  <div class="ph"><h1>ویدیوهای <span class="gr">آموزشی</span></h1><p>آموزش تصویری زیست‌شناسی از پایه تا کنکور.</p></div>
+  <div class="fbar">
+    <input id="vSearch" placeholder="🔍 جستجوی ویدیو..." oninput="renderVideos()">
+    <div class="chip active" onclick="filterVideos('all',this)">همه</div>
+    <div class="chip" onclick="filterVideos('دهم',this)">دهم</div>
+    <div class="chip" onclick="filterVideos('یازدهم',this)">یازدهم</div>
+    <div class="chip" onclick="filterVideos('دوازدهم',this)">دوازدهم</div>
+    <div class="chip" onclick="filterVideos('جمع‌بندی',this)">جمع‌بندی</div>
+  </div>
+  <div class="grid" id="videosGrid"></div>
+</div>
+
+<!-- ============ PDFS ============ -->
+<div class="page" id="page-pdfs">
+  <div class="ph"><h1>جزوه‌های <span class="gr">آموزشی</span></h1><p>جزوه‌های PDF زیست‌شناسی، آماده دانلود.</p></div>
+  <div class="fbar">
+    <input id="pSearch" placeholder="🔍 جستجوی جزوه..." oninput="renderPDFs()">
+    <div class="chip active" onclick="filterPDFs('all',this)">همه</div>
+    <div class="chip" onclick="filterPDFs('دهم',this)">دهم</div>
+    <div class="chip" onclick="filterPDFs('یازدهم',this)">یازدهم</div>
+    <div class="chip" onclick="filterPDFs('دوازدهم',this)">دوازدهم</div>
+    <div class="chip" onclick="filterPDFs('خلاصه',this)">خلاصه</div>
+    <div class="chip" onclick="filterPDFs('تست',this)">تست</div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px" id="pdfsGrid"></div>
+</div>
+
+<!-- ============ QUIZZES ============ -->
+<div class="page" id="page-quizzes">
+  <div class="ph"><h1>آزمون‌های <span class="gr">آنلاین</span></h1><p>آزمون‌های استاندارد زیست با کارنامه و تحلیل.</p></div>
+  <div class="ql" id="quizzesList"></div>
+</div>
+
+<!-- ============ BLOG ============ -->
+<div class="page" id="page-blog">
+  <div class="ph"><h1>وبلاگ <span class="gr">زیست‌شناسی</span></h1><p>مقالات آموزشی و نکات کنکوری زیست.</p></div>
+  <div class="grid" id="blogGrid"></div>
+</div>
+
+<!-- ============ STATS (صفحه جدا) ============ -->
+<div class="page" id="page-stats">
+  <div class="ph">
+    <h1>آمار <span class="gr">زنده سایت</span></h1>
+    <p>آمار بازدید و کاربران آنلاین به‌صورت لحظه‌ای</p>
+  </div>
+  <div class="stats-page">
+    <div class="stats-widget-full">
+      <script type="text/javascript" src="https://1abzar.ir/abzar/tools/stat/amar-v3.php?color=00ffc6&bg=140a2b&kc=a99fc7&kadr=1&amar=lywbjqat1krg-ion18xbflnsz0uszt&show=1|1|1|1|1|1|1"></script>
+      <div style="display:none"><h3><a href="https://www.1abzar.com/abzar/stat.php">آمارگیر وبلاگ</a></h3></div>
+    </div>
+    <div class="stats-live-info">
+      <div class="live-card">
+        <div class="live-icon">🟢</div>
+        <h3>به‌روزرسانی خودکار</h3>
+        <p>آمار هر لحظه از سرور ۱ابزار دریافت می‌شود</p>
+      </div>
+      <div class="live-card">
+        <div class="live-icon">🌍</div>
+        <h3>سراسری</h3>
+        <p>تمام بازدیدکنندگان از هر نقطه دنیا شمرده می‌شوند</p>
+      </div>
+      <div class="live-card">
+        <div class="live-icon">🔒</div>
+        <h3>امن و پایدار</h3>
+        <p>سرویس رسمی ۱ابزار با پشتیبانی طولانی‌مدت</p>
+      </div>
+    </div>
+    <div class="stats-note">
+      <p>📌 این آمار به‌صورت لحظه‌ای از سرویس آمارگیر <a href="https://www.1abzar.com" target="_blank">1abzar.com</a> دریافت می‌شود و کاملاً واقعی است.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FAQ ============ -->
+<div class="page" id="page-faq">
+  <div class="ph"><h1>سوالات <span class="gr">متداول</span></h1><p>پاسخ به سوالات پرتکرار دانشجویان.</p></div>
+  <div class="faq" id="faqList"></div>
+  <div style="margin-top:50px">
+    <div class="nl rev">
+      <h3>📬 عضویت در خبرنامه</h3>
+      <p>از جدیدترین دوره‌ها، ویدیوها و تخفیف‌ها باخبر شو.</p>
+      <form class="nlf" onsubmit="subNews(event)">
+        <input type="email" placeholder="ایمیل خود را وارد کنید" required>
+        <button type="submit" class="btn bp">عضویت</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<div class="page" id="page-about">
+  <div class="ph"><h1>درباره <span class="gr">دکتر علیرضا احمدیان</span></h1><p>مدرس زیست‌شناسی کنکور</p></div>
+  <div class="aw">
+    <div class="ai rev">🧬</div>
+    <div class="at rev">
+      <h2>سلام، من <span class="gr2">دکتر علیرضا احمدیان</span> هستم</h2>
+      <p>مدرس زیست‌شناسی کنکور. اینجا هستم تا دانش‌آموزان رو در مسیر یادگیری زیست‌شناسی و موفقیت در کنکور همراهی کنم.</p>
+      <p>روش تدریس من ترکیبی از مفاهیم عمیق زیست‌شناسی و تکنیک‌های تست‌زنی سریع است که یادگیری زیست رو لذت‌بخش می‌کنه.</p>
+      <ul class="al">
+        <li>مدرس زیست‌شناسی کنکور</li>
+        <li>تدریس دوره‌های دهم، یازدهم و دوازدهم</li>
+        <li>آموزش تکنیک‌های تست‌زنی زیست</li>
+        <li>مشاوره تحصیلی دانش‌آموزان</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CONTACT ============ -->
+<div class="page" id="page-contact">
+  <div class="ph"><h1>تماس <span class="gr">با ما</span></h1><p>سوالی داری؟ ما همیشه آماده‌ایم.</p></div>
+  <div class="cw">
+    <div class="ci2 rev">
+      <div><div class="cico">📞</div><div><h4>تلفن</h4><p>09142771109</p></div></div>
+      <div><div class="cico">✉️</div><div><h4>ایمیل</h4><p>+</p></div></div>
+      <div><div class="cico">📍</div><div><h4>آدرس</h4><p>تبریز</p></div></div>
+      <div><div class="cico">🕐</div><div><h4>ساعات کاری</h4><p>شنبه تا پنجشنبه،  </p></div></div>
+      <div style="margin-top:15px">
+        <button class="btn bs bbl" onclick="openLiveChat()">💬 چت آنلاین با پشتیبانی</button>
+      </div>
+    </div>
+    <form class="rev" onsubmit="subContact(event)">
+      <input placeholder="نام و نام خانوادگی" required>
+      <input type="email" placeholder="ایمیل" required>
+      <input placeholder="موضوع">
+      <textarea placeholder="پیام شما..." required></textarea>
+      <button type="submit" class="btn bp bbl">ارسال پیام</button>
+    </form>
+  </div>
+</div>
+
+<!-- ============ LOGIN ============ -->
+<div class="page np" id="page-login">
+  <div class="lw">
+    <div class="lb">
+      <div class="lic">🔐</div>
+      <h2 id="aTitle">ورود به حساب</h2>
+      <p id="aSub">خوش آمدید! لطفاً وارد شوید.</p>
+      <div class="tabs">
+        <button class="tab active" id="tLogin" onclick="swAuth('login')">ورود</button>
+        <button class="tab" id="tReg" onclick="swAuth('register')">ثبت‌نام</button>
+      </div>
+      <div class="lerr" id="lerr">خطا</div>
+      <form id="loginF" onsubmit="doLogin(event)">
+        <label>نام کاربری</label>
+        <input id="lu" placeholder="نام کاربری" required autocomplete="username">
+        <label>رمز عبور</label>
+        <input type="password" id="lp" placeholder="رمز عبور" required autocomplete="current-password">
+        <div class="rm"><input type="checkbox" id="rm"><label for="rm" style="margin:0;cursor:pointer">مرا به خاطر بسپار</label></div>
+        <button type="submit" class="btn bp bbl">ورود</button>
+      </form>
+      <form id="regF" onsubmit="doReg(event)" style="display:none">
+        <label>نام و نام خانوادگی</label>
+        <input id="rn" placeholder="علی رضایی" required>
+        <label>نام کاربری</label>
+        <input id="ru" placeholder="username" required>
+        <label>ایمیل</label>
+        <input type="email" id="re" placeholder="you@example.com" required>
+        <label>رمز عبور</label>
+        <input type="password" id="rp" placeholder="حداقل ۴ کاراکتر" required minlength="4">
+        <button type="submit" class="btn bp bbl">ثبت‌نام</button>
+      </form>
+      <div class="lh">🔐 ورود امن از طریق سرور انجام می‌شود.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ USER PANEL ============ -->
+<div class="page" id="page-user">
+  <div class="uw">
+    <div class="uh">
+      <div class="ua" id="uav">👨‍🏫</div>
+      <div class="ui">
+        <h2>من <span class="gr2">دکتر علیرضا احمدیان</span> هستم</h2>
+        <p id="ue">مدرس زیست‌شناسی کنکور</p>
+      </div>
+    </div>
+    <div class="us">
+      <div class="us2"><h3 id="us1">۰</h3><p>دوره</p></div>
+      <div class="us2"><h3 id="us2">۰</h3><p>علاقه‌مندی</p></div>
+      <div class="us2"><h3 id="us3">۰</h3><p>آزمون</p></div>
+      <div class="us2"><h3 id="us4">۰</h3><p>امتیاز</p></div>
+      <div class="us2"><h3 id="us5">۰</h3><p>سفارش</p></div>
+    </div>
+    <div class="tabs" style="max-width:750px;margin:0 auto 25px">
+      <button class="tab active" onclick="swUT('courses',this)">📚 دوره‌های من</button>
+      <button class="tab" onclick="swUT('orders',this)">📦 سفارش‌ها</button>
+      <button class="tab" onclick="swUT('favorites',this)">❤️ علاقه‌مندی</button>
+      <button class="tab" onclick="swUT('quizzes',this)">📝 آزمون‌ها</button>
+      <button class="tab" onclick="swUT('badges',this)">🏆 دستاورد</button>
+      <button class="tab" onclick="swUT('cert',this)">🎓 گواهی</button>
+      <button class="tab" onclick="swUT('profile',this)">👤 پروفایل</button>
+    </div>
+    <div class="ut" id="ut-courses"><div class="grid" id="myC"></div></div>
+    <div class="ut" id="ut-orders" style="display:none"><div id="myO"></div></div>
+    <div class="ut" id="ut-favorites" style="display:none"><div id="myF"></div></div>
+    <div class="ut" id="ut-quizzes" style="display:none"><div id="myQ"></div></div>
+    <div class="ut" id="ut-badges" style="display:none"><div class="bgr" id="myB"></div></div>
+    <div class="ut" id="ut-cert" style="display:none"><div id="myCert"></div></div>
+    <div class="ut" id="ut-profile" style="display:none">
+      <div style="max-width:450px">
+        <div class="afg"><label>نام</label><input id="pn"></div>
+        <div class="afg"><label>ایمیل</label><input type="email" id="pe"></div>
+        <div class="afg"><label>رمز جدید (اختیاری)</label><input type="password" id="pp" placeholder="خالی بگذارید"></div>
+        <button class="btn bp" onclick="savePr()">💾 ذخیره</button>
+        <button class="btn bd" onclick="logout()" style="margin-right:8px">🚪 خروج</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CHECKOUT ============ -->
+<div class="page" id="page-checkout">
+  <div class="ph"><h1>تکمیل <span class="gr">خرید</span></h1><p>اطلاعات خود را وارد کنید.</p></div>
+  <div class="co">
+    <div class="cof">
+      <h3>📋 اطلاعات خریدار</h3>
+      <div class="afg"><label>نام و نام خانوادگی</label><input id="ckName"></div>
+      <div class="afg"><label>ایمیل</label><input type="email" id="ckEmail"></div>
+      <div class="afg"><label>شماره تماس</label><input type="tel" id="ckPhone"></div>
+      <div class="afg"><label>آدرس (اختیاری)</label><textarea id="ckAddr" style="min-height:70px"></textarea></div>
+      <h3 style="margin-top:20px">💳 روش پرداخت</h3>
+      <div class="pm">
+        <label class="pmi active" onclick="selPay(this)"><input type="radio" name="pay" value="zarinpal" checked><div class="pmi-i"><strong>🌐 زرین‌پال</strong><small>پرداخت آنلاین</small></div></label>
+        <label class="pmi" onclick="selPay(this)"><input type="radio" name="pay" value="wallet"><div class="pmi-i"><strong>💎 کیف پول</strong><small>از موجودی</small></div></label>
+        <label class="pmi" onclick="selPay(this)"><input type="radio" name="pay" value="card"><div class="pmi-i"><strong>💳 کارت به کارت</strong><small>واریز</small></div></label>
+      </div>
+    </div>
+    <div class="cos">
+      <h3>🧾 خلاصه سفارش</h3>
+      <div class="coi" id="ckItems"></div>
+      <div class="cpw"><input id="cpIn" placeholder="کد تخفیف" style="text-transform:uppercase"><button class="btn bp" onclick="appCoupon()">اعمال</button></div>
+      <div id="cpBox"></div>
+      <div class="csb"><span>جمع کل:</span><span id="ckSub">۰ تومان</span></div>
+      <div class="csb" id="ckDiscRow" style="display:none"><span>تخفیف:</span><span id="ckDisc" style="color:var(--ne)">۰ تومان</span></div>
+      <div class="csb tt"><span>مبلغ نهایی:</span><span class="tp" id="ckTot">۰ تومان</span></div>
+      <button class="btn bp bbl" onclick="doPay()" style="margin-top:15px">✅ پرداخت</button>
+      <button class="btn bg bbl" onclick="goPage('courses')" style="margin-top:8px">← ادامه خرید</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SUCCESS ============ -->
+<div class="page" id="page-success">
+  <div class="sbox">
+    <div class="sic">🎉</div>
+    <h2>پرداخت با موفقیت انجام شد!</h2>
+    <p>از خرید شما سپاسگزاریم. دسترسی فعال شد.</p>
+    <div class="onb" id="okNum">ORD-000000</div>
+    <p style="font-size:.82rem;color:var(--mu)">شماره سفارش خود را نگه دارید.</p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px">
+      <button class="btn bp" onclick="goPage('user')">👤 پنل کاربری</button>
+      <button class="btn bg" onclick="goPage('courses')">📚 دوره‌های بیشتر</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ ADMIN ============ -->
+<div class="page np" id="page-admin">
+  <div class="aw2">
+    <aside class="as">
+      <div class="au"><div class="av">👨‍🏫</div><h4>دکتر علیرضا احمدیان</h4><p>مدیر سیستم</p></div>
+      <ul>
+        <li class="active" onclick="swT('dashboard',this)">📊 داشبورد</li>
+        <li onclick="swT('courses',this)">📚 دوره‌ها</li>
+        <li onclick="swT('videos',this)">🎬 ویدیوها</li>
+        <li onclick="swT('pdfs',this)">📄 جزوه‌ها</li>
+        <li onclick="swT('quizzes',this)">📝 آزمون‌ها</li>
+        <li onclick="swT('blog',this)">📖 وبلاگ</li>
+        <li onclick="swT('orders',this)">📦 سفارش‌ها</li>
+        <li onclick="swT('users',this)">👥 کاربران</li>
+        <li onclick="swT('messages',this)">💬 پیام‌ها</li>
+        <li onclick="swT('coupons',this)">🎟️ کد تخفیف</li>
+        <li onclick="swT('newsletter',this)">📬 خبرنامه</li>
+        <li onclick="swT('reports',this)">📈 گزارش‌ها</li>
+        <li onclick="logout()" style="color:var(--dg);margin-top:15px">🚪 خروج</li>
+      </ul>
+    </aside>
+    <main class="ac">
+      <div class="at2 active" id="t-dashboard">
+        <h2>📊 داشبورد مدیریت</h2><p>خلاصه‌ای از وضعیت آکادمی</p>
+        <div class="as2">
+          <div class="as3"><div class="ic">📚</div><h3 id="stC">0</h3><p>دوره</p></div>
+          <div class="as3"><div class="ic">🎬</div><h3 id="stV">0</h3><p>ویدیو</p></div>
+          <div class="as3"><div class="ic">📄</div><h3 id="stP">0</h3><p>جزوه</p></div>
+          <div class="as3"><div class="ic">📝</div><h3 id="stQ">0</h3><p>آزمون</p></div>
+          <div class="as3"><div class="ic">👥</div><h3 id="stU">0</h3><p>کاربر</p></div>
+          <div class="as3"><div class="ic">📦</div><h3 id="stO">0</h3><p>سفارش</p></div>
+          <div class="as3"><div class="ic">💰</div><h3 id="stRev">0</h3><p>درآمد</p></div>
+          <div class="as3"><div class="ic">💬</div><h3 id="stM">0</h3><p>پیام</p></div>
+        </div>
+        <div class="chc"><h3>📈 بازدید هفتگی</h3><div class="bc2" id="ch1"></div></div>
+      </div>
+      <div class="at2" id="t-courses"><h2>📚 مدیریت دوره‌ها</h2><p>افزودن و حذف</p><div class="atl"><h3>لیست</h3><button class="btn bp bsm" onclick="addC()">➕ افزودن</button></div><table class="atb"><thead><tr><th>#</th><th>عنوان</th><th>قیمت</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody id="tbC"></tbody></table></div>
+      <div class="at2" id="t-videos"><h2>🎬 مدیریت ویدیوها</h2><p>افزودن و حذف</p><div class="atl"><h3>لیست</h3><button class="btn bp bsm" onclick="addV()">➕ افزودن</button></div><table class="atb"><thead><tr><th>#</th><th>عنوان</th><th>پایه</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody id="tbV"></tbody></table></div>
+      <div class="at2" id="t-pdfs"><h2>📄 مدیریت جزوه‌ها</h2><p>افزودن و حذف</p><div class="atl"><h3>لیست</h3><button class="btn bp bsm" onclick="addP()">➕ افزودن</button></div><table class="atb"><thead><tr><th>#</th><th>عنوان</th><th>پایه</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody id="tbP"></tbody></table></div>
+      <div class="at2" id="t-quizzes"><h2>📝 مدیریت آزمون‌ها</h2><p>افزودن و حذف</p><div class="atl"><h3>لیست</h3><button class="btn bp bsm" onclick="addQ()">➕ افزودن</button></div><table class="atb"><thead><tr><th>#</th><th>عنوان</th><th>پایه</th><th>سوال</th><th>عملیات</th></tr></thead><tbody id="tbQ"></tbody></table></div>
+      <div class="at2" id="t-blog"><h2>📖 مدیریت وبلاگ</h2><p>افزودن و حذف</p><div class="atl"><h3>لیست</h3><button class="btn bp bsm" onclick="addB()">➕ افزودن</button></div><table class="atb"><thead><tr><th>#</th><th>عنوان</th><th>دسته</th><th>عملیات</th></tr></thead><tbody id="tbB"></tbody></table></div>
+      <div class="at2" id="t-orders"><h2>📦 مدیریت سفارش‌ها</h2><p>سفارش‌های ثبت شده</p><table class="atb"><thead><tr><th>#</th><th>شماره</th><th>خریدار</th><th>مبلغ</th><th>تاریخ</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody id="tbO"></tbody></table></div>
+      <div class="at2" id="t-users"><h2>👥 مدیریت کاربران</h2><p>لیست کاربران</p><table class="atb"><thead><tr><th>#</th><th>نام</th><th>یوزر</th><th>ایمیل</th><th>امتیاز</th><th>سفارش</th><th>عملیات</th></tr></thead><tbody id="tbU"></tbody></table></div>
+      <div class="at2" id="t-messages"><h2>💬 پیام‌ها</h2><p>پیام‌های فرم تماس</p><table class="atb"><thead><tr><th>#</th><th>نام</th><th>موضوع</th><th>متن</th><th>عملیات</th></tr></thead><tbody id="tbM"></tbody></table></div>
+      <div class="at2" id="t-coupons"><h2>🎟️ کدهای تخفیف</h2><p>مدیریت کدها</p><div class="atl"><h3>لیست</h3><button class="btn bp bsm" onclick="addCp()">➕ افزودن</button></div><div id="cpList"></div></div>
+      <div class="at2" id="t-newsletter"><h2>📬 اعضای خبرنامه</h2><p>ایمیل‌های ثبت شده</p><table class="atb"><thead><tr><th>#</th><th>ایمیل</th><th>تاریخ</th><th>عملیات</th></tr></thead><tbody id="tbN"></tbody></table></div>
+      <div class="at2" id="t-reports"><h2>📈 گزارش‌ها</h2><p>آمار و تحلیل</p><div class="chc"><h3>📊 فروش ماهانه</h3><div class="bc2" id="ch2"></div></div><div class="chc"><h3>👥 کاربران جدید</h3><div class="bc2" id="ch3"></div></div></div>
+    </main>
+  </div>
+</div>
+
+<footer>
+  <div class="fg">
+    <div>
+      <div class="logo" style="margin-bottom:12px">دکتر علیرضا احمدیان<span>.</span></div>
+      <p>آکادمی زیست‌شناسی، همراه شما در مسیر موفقیت کنکور.</p>
+      <div class="soc"><a>📷</a><a>▶️</a><a>💬</a><a>🐦</a></div>
+    </div>
+    <div><h4>دسترسی</h4><ul>
+      <li><a onclick="goPage('home')">خانه</a></li>
+      <li><a onclick="goPage('courses')">دوره‌ها</a></li>
+      <li><a onclick="goPage('videos')">ویدیوها</a></li>
+      <li><a onclick="goPage('stats')">آمار زنده</a></li>
+    </ul></div>
+    <div><h4>خدمات</h4><ul>
+      <li><a onclick="goPage('courses')">دوره‌های زیست</a></li>
+      <li><a onclick="goPage('pdfs')">جزوه‌ها</a></li>
+      <li><a onclick="goPage('quizzes')">آزمون</a></li>
+      <li><a onclick="goPage('contact')">تماس</a></li>
+    </ul></div>
+    <div><h4>پشتیبانی</h4><ul>
+      <li><a onclick="openLiveChat()">چت آنلاین</a></li>
+      <li><a onclick="goPage('faq')">سوالات متداول</a></li>
+      <li><a>قوانین</a></li>
+      <li><a>حریم خصوصی</a></li>
+    </ul></div>
+  </div>
+  <div class="fb2">© ۱۴۰۳ آکادمی زیست‌شناسی دکتر علیرضا احمدیان | تمامی حقوق محفوظ است.</div>
+</footer>
+
+<div class="mod" id="mVideo" onclick="if(event.target===this)closeVideo()"><div class="mbox"><button class="mc" onclick="closeVideo()">✕</button><div id="vc"></div></div></div>
+<div class="mod" id="mPdf" onclick="if(event.target===this)closePDF()"><div class="mbox"><button class="mc" onclick="closePDF()">✕</button><div id="pc"></div></div></div>
+<div class="mod" id="mQuiz" onclick="if(event.target===this)closeQuiz()"><div class="mbox"><button class="mc" onclick="closeQuiz()">✕</button><div id="qc"></div></div></div>
+<div class="mod" id="mCourse" onclick="if(event.target===this)closeCourse()"><div class="mbox"><button class="mc" onclick="closeCourse()">✕</button><div id="cc"></div></div></div>
+
+<button class="tt" onclick="tglTheme()" id="tbtn">🌙</button>
+<button class="stp" id="stp" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<nav class="mob-nav" id="mobNav">
+  <button class="mn-btn active" data-mob="home" onclick="goPage('home')"><span class="mn-icon">🏠</span><span class="mn-label">خانه</span></button>
+  <button class="mn-btn" data-mob="courses" onclick="goPage('courses')"><span class="mn-icon">📚</span><span class="mn-label">دوره‌ها</span></button>
+  <button class="mn-btn" data-mob="videos" onclick="goPage('videos')"><span class="mn-icon">🎬</span><span class="mn-label">ویدیوها</span></button>
+  <button class="mn-btn mn-cart" onclick="openCart()"><span class="mn-icon">🛒</span><span class="mn-label">سبد</span><span class="mn-badge" id="mobCartBadge" style="display:none">0</span></button>
+  <button class="mn-btn" data-mob="user" id="mobUserBtn" onclick="authClick()"><span class="mn-icon" id="mobUserIcon">👤</span><span class="mn-label" id="mobUserLabel">ورود</span></button>
+</nav>
+
+<div class="toast" id="toast">✓</div>
+
+<script src="script.js"></script>
+
+<!-- ============ گف‌تینو — چت آنلاین ============ -->
+<script type="text/javascript">
+  !function(){
+    var i="gMw3zE",
+    d=document,
+    g=d.createElement("script"),
+    s="https://www.goftino.com/widget/"+i,
+    l=localStorage.getItem("goftino_"+i);
+    g.type="text/javascript";
+    g.async=!0;
+    g.src=l?s+"?o="+l:s;
+    d.getElementsByTagName("head")[0].appendChild(g);
+  }();
+</script>
+
+</body>
+</html>
