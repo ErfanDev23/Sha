@@ -41,13 +41,64 @@ const DV = [
   { id: 8, title: 'تکنیک‌های تست‌زنی زیست', grade: 'جمع‌بندی', duration: '۴۲:۳۰', locked: false, isNew: false, views: 3200, desc: 'تکنیک تست‌زنی.' }
 ];
 
+/* ============================================================
+   📄 PDFs — با لینک‌های واقعی
+============================================================ */
 const DP = [
-  { id: 1, title: 'خلاصه زیست دهم — فصل ۱ تا ۴', grade: 'دهم', type: 'خلاصه', size: '2.5 MB', pages: 45, downloads: 1240, locked: false, desc: 'خلاصه فصول ۱ تا ۴.' },
-  { id: 2, title: 'تست‌های زیست دهم', grade: 'دهم', type: 'تست', size: '4.8 MB', pages: 120, downloads: 890, locked: false, desc: '+۵۰۰ تست.' },
-  { id: 3, title: 'خلاصه زیست یازدهم', grade: 'یازدهم', type: 'خلاصه', size: '3.2 MB', pages: 60, downloads: 720, locked: true, desc: 'خلاصه یازدهم.' },
-  { id: 4, title: 'جزوه ژنتیک دوازدهم', grade: 'دوازدهم', type: 'خلاصه', size: '5.5 MB', pages: 85, downloads: 1580, locked: true, desc: 'جزوه ژنتیک.' },
-  { id: 5, title: 'تست‌های ژنتیک کنکور', grade: 'دوازدهم', type: 'تست', size: '6.2 MB', pages: 150, downloads: 2100, locked: true, desc: 'تست ژنتیک.' },
-  { id: 6, title: 'خلاصه جمع‌بندی کنکور', grade: 'جمع‌بندی', type: 'خلاصه', size: '8.5 MB', pages: 200, downloads: 3400, locked: true, desc: 'خلاصه کنکور.' }
+  {
+    id: 1,
+    title: 'جمع‌بندی فصل ۱ تا ۷ زیست دهم',
+    grade: 'دهم',
+    type: 'خلاصه',
+    size: '5 MB',
+    pages: 100,
+    downloads: 0,
+    locked: false,
+    desc: 'جزوه جمع‌بندی کامل فصل‌های ۱ تا ۷ زیست‌شناسی دهم',
+    file: 'https://uploadkon.ir/uploads/350023_26جمع-بندی-فصل-1-تا-7-دهم.pdf'
+  },
+  {
+    id: 2,
+    title: 'جمع‌بندی فصل ۱ تا ۹ زیست یازدهم',
+    grade: 'یازدهم',
+    type: 'خلاصه',
+    size: '8 MB',
+    pages: 200,
+    downloads: 0,
+    locked: false,
+    desc: 'جزوه جمع‌بندی کامل فصل‌های ۱ تا ۹ زیست‌شناسی یازدهم',
+    file: ''
+  },
+  {
+    id: 3,
+    title: 'پاسخ‌نامه زیست دهم، یازدهم و دوازدهم',
+    grade: 'جمع‌بندی',
+    type: 'تست',
+    size: '3 MB',
+    pages: 50,
+    downloads: 0,
+    locked: false,
+    desc: 'مجموعه پاسخ‌نامه کامل زیست‌شناسی هر سه پایه',
+    file: ''
+  },
+  { id: 4, title: 'خلاصه زیست دهم — فصل ۱ تا ۴', grade: 'دهم', type: 'خلاصه',
+    size: '2.5 MB', pages: 45, downloads: 1240, locked: false,
+    desc: 'خلاصه فصول ۱ تا ۴', file: '' },
+  { id: 5, title: 'تست‌های زیست دهم', grade: 'دهم', type: 'تست',
+    size: '4.8 MB', pages: 120, downloads: 890, locked: false,
+    desc: '+۵۰۰ تست', file: '' },
+  { id: 6, title: 'خلاصه زیست یازدهم', grade: 'یازدهم', type: 'خلاصه',
+    size: '3.2 MB', pages: 60, downloads: 720, locked: true,
+    desc: 'خلاصه یازدهم', file: '' },
+  { id: 7, title: 'جزوه ژنتیک دوازدهم', grade: 'دوازدهم', type: 'خلاصه',
+    size: '5.5 MB', pages: 85, downloads: 1580, locked: true,
+    desc: 'جزوه ژنتیک', file: '' },
+  { id: 8, title: 'تست‌های ژنتیک کنکور', grade: 'دوازدهم', type: 'تست',
+    size: '6.2 MB', pages: 150, downloads: 2100, locked: true,
+    desc: 'تست ژنتیک', file: '' },
+  { id: 9, title: 'خلاصه جمع‌بندی کنکور', grade: 'جمع‌بندی', type: 'خلاصه',
+    size: '8.5 MB', pages: 200, downloads: 3400, locked: true,
+    desc: 'خلاصه کنکور', file: '' }
 ];
 
 const DQ = [
@@ -133,11 +184,21 @@ if (!Array.isArray(newsletter)) newsletter = [];
 if (!Array.isArray(cart)) cart = [];
 
 function save() {
-  saveLocalOnly();
-  if (isAdmin()) {
-    api('/admin/state', { method: 'PUT', body: JSON.stringify({ courses, videos, pdfs, quizzes, blog, messages, coupons, notifs, faqs }) })
-      .catch(e => console.warn('ذخیره روی سرور انجام نشد:', e.message));
-  }
+  safeSet('bc', courses);
+  safeSet('bv', videos);
+  safeSet('bp', pdfs);
+  safeSet('bq', quizzes);
+  safeSet('bb', blog);
+  safeSet('bm', messages);
+  safeSet('bcp', coupons);
+  safeSet('bu', users);
+  safeSet('bn', notifs);
+  safeSet('bf', faqs);
+  safeSet('bo', orders);
+  safeSet('bnl', newsletter);
+  safeSet('bcart', cart);
+  if (curUser) safeSet('bcu', curUser);
+  else try { localStorage.removeItem('bcu'); } catch (e) {}
 }
 
 /* ============================================================
@@ -176,46 +237,12 @@ function gOrd() {
 /* ============================================================
    AUTH
 ============================================================ */
-const API_BASE = window.location.protocol === 'file:' ? 'http://localhost:3000/api' : '/api';
-let authToken = safeGet('authToken', null);
-let authRole = safeGet('authRole', null);
+const AU = 'admin';
+const AP = '1234';
+const AK = 'ba';
 
-async function api(path, options = {}) {
-  const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
-  if (authToken) headers.Authorization = 'Bearer ' + authToken;
-  const res = await fetch(API_BASE + path, { ...options, headers });
-  let body = {};
-  try { body = await res.json(); } catch (_) {}
-  if (!res.ok) throw new Error(body.error || 'خطا در ارتباط با سرور');
-  return body;
-}
-
-function isAdmin() { return authRole === 'admin' && !!authToken; }
-function isLogged() { return curUser !== null && !!authToken; }
-
-async function hydrateFromServer() {
-  try {
-    const d = await api('/public/state');
-    if (Array.isArray(d.courses)) courses = d.courses;
-    if (Array.isArray(d.videos)) videos = d.videos;
-    if (Array.isArray(d.pdfs)) pdfs = d.pdfs;
-    if (Array.isArray(d.quizzes)) quizzes = d.quizzes;
-    if (Array.isArray(d.blog)) blog = d.blog;
-    if (Array.isArray(d.messages)) messages = d.messages;
-    if (Array.isArray(d.coupons)) coupons = d.coupons;
-    if (Array.isArray(d.notifs)) notifs = d.notifs;
-    if (Array.isArray(d.faqs)) faqs = d.faqs;
-    if (Array.isArray(d.orders) && isAdmin()) orders = d.orders;
-    saveLocalOnly();
-  } catch (e) { console.warn('Server sync failed:', e.message); }
-}
-
-function saveLocalOnly() {
-  safeSet('bc', courses); safeSet('bv', videos); safeSet('bp', pdfs); safeSet('bq', quizzes);
-  safeSet('bb', blog); safeSet('bm', messages); safeSet('bcp', coupons); safeSet('bn', notifs);
-  safeSet('bf', faqs); safeSet('bo', orders); safeSet('bnl', newsletter); safeSet('bcart', cart);
-  if (curUser) safeSet('bcu', curUser); else try { localStorage.removeItem('bcu'); } catch(e) {}
-}
+function isAdmin() { return localStorage.getItem(AK) === 'true'; }
+function isLogged() { return curUser !== null; }
 
 function authClick() {
   if (isAdmin()) goPage('admin');
@@ -262,39 +289,78 @@ function showErr(m) {
   showErr._t = setTimeout(() => e.classList.remove('show'), 3500);
 }
 
-async function doLogin(e) {
+function doLogin(e) {
   e.preventDefault();
   const u = document.getElementById('lu').value.trim();
   const p = document.getElementById('lp').value.trim();
-  try {
-    const r = await api('/auth/login', { method:'POST', body:JSON.stringify({ username:u, password:p }) });
-    authToken = r.token; authRole = r.user.role || 'user'; curUser = r.user;
-    safeSet('authToken', authToken); safeSet('authRole', authRole); saveLocalOnly();
+
+  if (u === AU && p === AP) {
+    try { localStorage.setItem(AK, 'true'); } catch (err) {}
     document.getElementById('lerr').classList.remove('show');
-    document.getElementById('lu').value=''; document.getElementById('lp').value='';
-    updAuth(); addN('🎉 ' + (r.user.name || 'کاربر') + ' عزیز، خوش آمدی!');
-    toast('✓ خوش آمدید ' + (r.user.name || '') + '!');
-    setTimeout(() => goPage(authRole === 'admin' ? 'admin' : 'user'), 400);
-  } catch (err) { showErr('❌ ' + err.message); }
+    document.getElementById('lu').value = '';
+    document.getElementById('lp').value = '';
+    updAuth();
+    toast('✓ خوش آمدید دکتر احمدیان!');
+    addN('👋 دکتر علیرضا احمدیان خوش آمدید!');
+    setTimeout(() => goPage('admin'), 400);
+    return;
+  }
+
+  const f = users.find(x => x.username === u && x.password === p);
+  if (f) {
+    curUser = f;
+    save();
+    document.getElementById('lerr').classList.remove('show');
+    document.getElementById('lu').value = '';
+    document.getElementById('lp').value = '';
+    updAuth();
+    addN('🎉 ' + f.name + ' عزیز، خوش آمدی!');
+    toast('✓ خوش آمدید ' + f.name + '!');
+    setTimeout(() => goPage('user'), 400);
+  } else {
+    showErr('❌ نام کاربری یا رمز اشتباه!');
+  }
 }
 
-async function doReg(e) {
+function doReg(e) {
   e.preventDefault();
-  const n=document.getElementById('rn').value.trim(), u=document.getElementById('ru').value.trim();
-  const em=document.getElementById('re').value.trim(), p=document.getElementById('rp').value.trim();
-  try {
-    const r=await api('/auth/register',{method:'POST',body:JSON.stringify({name:n,username:u,email:em,password:p})});
-    authToken=r.token; authRole='user'; curUser=r.user;
-    safeSet('authToken',authToken); safeSet('authRole',authRole); saveLocalOnly(); updAuth();
-    toast('✓ ثبت‌نام با موفقیت انجام شد'); setTimeout(()=>goPage('user'),400);
-  } catch(err){ showErr('❌ '+err.message); }
+  const n = document.getElementById('rn').value.trim();
+  const u = document.getElementById('ru').value.trim();
+  const em = document.getElementById('re').value.trim();
+  const p = document.getElementById('rp').value.trim();
+
+  if (!n || !u || !em || !p) { showErr('❌ همه فیلدها الزامی!'); return; }
+  if (u.toLowerCase() === AU) { showErr('❌ این یوزر مجاز نیست!'); return; }
+  if (users.find(x => x.username === u)) { showErr('❌ این یوزر استفاده شده!'); return; }
+  if (users.find(x => x.email === em)) { showErr('❌ این ایمیل ثبت شده!'); return; }
+  if (p.length < 4) { showErr('❌ رمز حداقل ۴ کاراکتر!'); return; }
+
+  const nu = {
+    id: gId(),
+    name: n, username: u, email: em, password: p,
+    courses: [], favorites: [], quizResults: [],
+    points: 0, orders: [],
+    joined: new Date().toLocaleDateString('fa-IR')
+  };
+  users.push(nu);
+  curUser = nu;
+  save();
+  ['rn', 'ru', 're', 'rp'].forEach(x => document.getElementById(x).value = '');
+  document.getElementById('lerr').classList.remove('show');
+  updAuth();
+  addN('🎉 ثبت‌نام موفق! خوش آمدید ' + n);
+  toast('✓ ثبت‌نام انجام شد');
+  setTimeout(() => goPage('user'), 400);
 }
 
-async function logout() {
-  try { if (authToken) await api('/auth/logout',{method:'POST'}); } catch(e) {}
-  authToken=null; authRole=null; curUser=null;
-  try { localStorage.removeItem('authToken'); localStorage.removeItem('authRole'); localStorage.removeItem('bcu'); localStorage.removeItem('ba'); } catch(e) {}
-  updAuth(); goPage('home'); toast('👋 با موفقیت خارج شدید');
+function logout() {
+  if (!confirm('خارج می‌شوید؟')) return;
+  try { localStorage.removeItem(AK); } catch (e) {}
+  curUser = null;
+  try { localStorage.removeItem('bcu'); } catch (e) {}
+  updAuth();
+  toast('👋 خارج شدید');
+  setTimeout(() => goPage('home'), 400);
 }
 
 /* ============================================================
@@ -688,7 +754,7 @@ function openVideo(id) {
 function closeVideo() { closeModal('mVideo'); }
 
 /* ============================================================
-   PDFS
+   PDFs
 ============================================================ */
 let pFil = 'all';
 function filterPDFs(g, el) {
@@ -720,31 +786,96 @@ function renderPDFs() {
   initRev();
 }
 
+/* ============================================================
+   باز کردن PDF در مودال
+============================================================ */
 function openPDF(id) {
   const p = pdfs.find(x => x.id === id);
   if (!p) return;
-  if (p.locked) { toast('🔒 این جزوه قفل است', 'warning'); return; }
+
+  if (p.locked) {
+    toast('🔒 این جزوه قفل است', 'warning');
+    return;
+  }
+
+  // اگه فایل واقعی نداشت → پیش‌نمایش ساده
+  if (!p.file) {
+    document.getElementById('pc').innerHTML =
+      '<h3 style="padding-left:45px;margin-bottom:15px">📄 ' + esc(p.title) + '</h3>' +
+      '<p style="color:var(--mu);margin-bottom:18px">' + esc(p.desc || '') + '</p>' +
+      '<div style="background:rgba(0,0,0,.4);padding:55px 20px;border-radius:14px;text-align:center;border:2px dashed var(--bd)">' +
+      '<div style="font-size:3.5rem;margin-bottom:12px">📄</div>' +
+      '<p style="color:var(--mu)">فایل این جزوه هنوز آپلود نشده است</p>' +
+      '</div>';
+    openModal('mPdf');
+    return;
+  }
+
+  // اگه لینک خارجی بود → از Google Docs Viewer استفاده کن
+  const isExternal = /^https?:\/\//i.test(p.file);
+  const viewerSrc = isExternal
+    ? 'https://docs.google.com/gview?embedded=true&url=' + encodeURIComponent(p.file)
+    : p.file + '#toolbar=0';
+
   document.getElementById('pc').innerHTML =
-    '<h3 style="padding-left:45px;margin-bottom:15px">' + esc(p.title) + '</h3>' +
+    '<h3 style="padding-left:45px;margin-bottom:15px">📄 ' + esc(p.title) + '</h3>' +
     '<p style="color:var(--mu);margin-bottom:18px">' + esc(p.desc || '') + '</p>' +
-    '<div style="background:rgba(0,0,0,.4);padding:55px 20px;border-radius:14px;text-align:center;border:2px dashed var(--bd)">' +
-    '<div style="font-size:3.5rem;margin-bottom:12px">📄</div><p style="color:var(--mu)">پیش‌نمایش PDF</p></div>' +
-    '<div class="pfm" style="margin-top:18px"><span>📁 ' + esc(p.size || '') + '</span>' +
-    '<span>📖 ' + fa(p.pages) + '</span><span>⬇ ' + fa(p.downloads) + '</span></div>' +
-    '<div style="margin-top:18px"><button class="btn bp" onclick="dlPDF(' + p.id + ')">⬇ دانلود</button></div>';
+
+    '<iframe src="' + viewerSrc + '" ' +
+      'style="width:100%;height:70vh;border-radius:14px;border:2px solid var(--bd);background:#fff" ' +
+      'loading="lazy" allowfullscreen></iframe>' +
+
+    '<div class="pfm" style="margin-top:18px">' +
+      '<span>📁 ' + esc(p.size || '') + '</span>' +
+      '<span>📖 ' + fa(p.pages) + '</span>' +
+      '<span>⬇ ' + fa(p.downloads) + '</span>' +
+    '</div>' +
+
+    '<div style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap">' +
+      '<a class="btn bp" href="' + p.file + '" download ' +
+        'style="text-decoration:none;padding:11px 22px">⬇ دانلود</a>' +
+      '<a class="btn bg" href="' + p.file + '" target="_blank" rel="noopener" ' +
+        'style="text-decoration:none;padding:11px 22px">🔗 باز کردن در تب جدید</a>' +
+    '</div>';
+
   openModal('mPdf');
 }
 
 function closePDF() { closeModal('mPdf'); }
 
+/* ============================================================
+   دانلود PDF
+============================================================ */
 function dlPDF(id) {
   const p = pdfs.find(x => x.id === id);
   if (!p) return;
-  if (p.locked) { toast('🔒 قفل است', 'warning'); return; }
+
+  if (p.locked) {
+    toast('🔒 این جزوه قفل است', 'warning');
+    return;
+  }
+
+  if (!p.file) {
+    toast('⚠️ لینک این جزوه هنوز ثبت نشده', 'warning');
+    return;
+  }
+
+  // افزایش شمارنده + امتیاز
   p.downloads = (p.downloads || 0) + 1;
   if (isLogged()) curUser.points = (curUser.points || 0) + 2;
   save();
   renderPDFs();
+
+  // دانلود واقعی
+  const a = document.createElement('a');
+  a.href = p.file;
+  a.download = p.title + '.pdf';
+  a.target = '_blank';
+  a.rel = 'noopener';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
   toast('✓ دانلود شروع شد');
 }
 
@@ -1149,16 +1280,229 @@ function selPay(el) {
   el.querySelector('input').checked = true;
 }
 
-async function doPay() {
-  if (!cart.length) { toast('سبد خالیه','warning'); return; }
-  const n=document.getElementById('ckName').value.trim(), e=document.getElementById('ckEmail').value.trim(), ph=document.getElementById('ckPhone').value.trim();
-  if(!n||!e||!ph){toast('❌ نام، ایمیل و تلفن الزامی','error');return;}
-  const pr=document.querySelector('input[name="pay"]:checked'); const pm=pr?pr.value:'zarinpal';
-  try {
-    const r=await api('/orders',{method:'POST',body:JSON.stringify({name:n,email:e,phone:ph,items:cart,paymentMethod:pm,couponCode:appliedCp?appliedCp.code:null})});
-    orders.push(r.order); cart=[]; appliedCp=null; saveLocalOnly(); updBadge(); renderCart(); renderCheckout();
-    toast('✓ سفارش ثبت شد: '+r.order.orderNumber); goPage('user');
-  } catch(err){ toast('❌ '+err.message,'error'); }
+function doPay() {
+  if (!cart.length) { toast('سبد خالیه', 'warning'); return; }
+  const n = document.getElementById('ckName').value.trim();
+  const e = document.getElementById('ckEmail').value.trim();
+  const ph = document.getElementById('ckPhone').value.trim();
+  if (!n || !e || !ph) { toast('❌ نام، ایمیل و تلفن الزامی', 'error'); return; }
+  const s = getSub();
+  let d = 0;
+  if (appliedCp) {
+    d = Math.round(s * (appliedCp.discount / 100));
+    appliedCp.uses = (appliedCp.uses || 0) + 1;
+  }
+  const t = s - d;
+  const pr = document.querySelector('input[name="pay"]:checked');
+  const pm = pr ? pr.value : 'zarinpal';
+  const on = gOrd();
+  const ord = {
+    id: gId(),
+    orderNumber: on,
+    userId: curUser ? curUser.id : null,
+    name: n, email: e, phone: ph,
+    items: JSON.parse(JSON.stringify(cart)),
+    subtotal: s, discount: d, total: t,
+    couponCode: appliedCp ? appliedCp.code : null,
+    paymentMethod: pm,
+    status: 'paid',
+    date: new Date().toLocaleDateString('fa-IR'),
+    dateTime: new Date().toISOString()
+  };
+  orders.unshift(ord);
+  if (curUser) {
+    if (!Array.isArray(curUser.courses)) curUser.courses = [];
+    cart.forEach(it => { if (!curUser.courses.includes(it.id)) curUser.courses.push(it.id); });
+    curUser.points = (curUser.points || 0) + Math.round(t / 10000);
+    if (!Array.isArray(curUser.orders)) curUser.orders = [];
+    curUser.orders.push(on);
+    const idx = users.findIndex(u => u.id === curUser.id);
+    if (idx > -1) users[idx] = curUser;
+  }
+  cart = [];
+  appliedCp = null;
+  save();
+  updBadge();
+  renderCart();
+  document.getElementById('okNum').textContent = on;
+  addN('🎉 سفارش ' + on + ' ثبت شد!');
+  toast('✓ پرداخت موفق');
+  goPage('success');
+}
+
+/* ============================================================
+   FAVORITES
+============================================================ */
+function tglFav(type, id) {
+  if (!isLogged()) {
+    toast('⚠️ ابتدا وارد شوید', 'warning');
+    setTimeout(() => goPage('login'), 400);
+    return;
+  }
+  if (!Array.isArray(curUser.favorites)) curUser.favorites = [];
+  let it;
+  if (type === 'video') {
+    const v = videos.find(x => x.id === id);
+    if (!v) return;
+    it = { id, type: 'ویدیو', title: v.title, icon: '🎬' };
+  } else if (type === 'pdf') {
+    const p = pdfs.find(x => x.id === id);
+    if (!p) return;
+    it = { id, type: 'جزوه', title: p.title, icon: '📄' };
+  }
+  const idx = curUser.favorites.findIndex(f => f.id === id && f.type === it.type);
+  if (idx > -1) { curUser.favorites.splice(idx, 1); toast('💔 حذف شد'); }
+  else { curUser.favorites.push(it); curUser.points = (curUser.points || 0) + 5; toast('❤️ اضافه شد'); }
+  const ui = users.findIndex(u => u.id === curUser.id);
+  if (ui > -1) users[ui] = curUser;
+  save();
+}
+
+/* ============================================================
+   COPY LINK
+============================================================ */
+function copyLink() {
+  const u = location.href;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(u)
+      .then(() => toast('✓ لینک کپی شد'))
+      .catch(() => toast('⚠️ کپی نشد', 'warning'));
+  } else {
+    const t = document.createElement('textarea');
+    t.value = u;
+    t.style.position = 'fixed';
+    t.style.opacity = '0';
+    document.body.appendChild(t);
+    t.select();
+    try { document.execCommand('copy'); toast('✓ لینک کپی شد'); }
+    catch (e) { toast('⚠️ کپی نشد', 'warning'); }
+    document.body.removeChild(t);
+  }
+}
+
+/* ============================================================
+   USER PANEL
+============================================================ */
+function renderUser() {
+  if (!isLogged()) return;
+
+  const ue = document.getElementById('ue');
+  const uav = document.getElementById('uav');
+  if (ue) ue.textContent = 'مدرس زیست‌شناسی کنکور';
+  if (uav) uav.textContent = '👨‍🏫';
+
+  const favs = Array.isArray(curUser.favorites) ? curUser.favorites : [];
+  const res = Array.isArray(curUser.quizResults) ? curUser.quizResults : [];
+  const ids = Array.isArray(curUser.courses) ? curUser.courses : [];
+  const myO = orders.filter(o => o.userId === curUser.id);
+
+  const s1 = document.getElementById('us1');
+  const s2 = document.getElementById('us2');
+  const s3 = document.getElementById('us3');
+  const s4 = document.getElementById('us4');
+  const s5 = document.getElementById('us5');
+  if (s1) s1.textContent = fa(ids.length);
+  if (s2) s2.textContent = fa(favs.length);
+  if (s3) s3.textContent = fa(res.length);
+  if (s4) s4.textContent = fa(curUser.points || 0);
+  if (s5) s5.textContent = fa(myO.length);
+
+  const mcs = courses.filter(c => ids.includes(c.id));
+  const myC = document.getElementById('myC');
+  if (myC) {
+    myC.innerHTML = mcs.length
+      ? mcs.map(c =>
+          '<div class="card"><div class="ci">' + esc(c.icon || '📚') + '</div>' +
+          '<h3>' + esc(c.title) + '</h3>' +
+          '<div class="pb"><div class="pf" style="width:60%"></div></div>' +
+          '<p style="font-size:.78rem;margin-top:6px;color:var(--mu)">پیشرفت: ۶۰٪</p>' +
+          '<button class="btn bp bsm" style="margin-top:12px" onclick="toast(\'▶ ادامه یادگیری\')">▶ ادامه</button></div>'
+        ).join('')
+      : '<p style="color:var(--mu);text-align:center;padding:35px">هنوز دوره‌ای نخریده‌اید.</p>';
+  }
+
+  const myOEl = document.getElementById('myO');
+  if (myOEl) {
+    myOEl.innerHTML = myO.length
+      ? myO.map(o =>
+          '<div class="oc"><div class="och">' +
+          '<span class="oci">' + esc(o.orderNumber) + '</span>' +
+          '<span class="ocd">' + esc(o.date) + '</span>' +
+          '<span class="osts ' + (o.status === 'paid' ? 'pi2' : '') + '">' +
+          (o.status === 'paid' ? '✓ پرداخت شده' : '⏳ در انتظار') + '</span></div>' +
+          '<div class="oil">' + o.items.map(it => '• ' + esc(it.icon || '') + ' ' + esc(it.title) + ' × ' + fa(it.qty || 1)).join('<br>') + '</div>' +
+          '<div class="ot">مبلغ کل: ' + faP(o.total) + '</div></div>'
+        ).join('')
+      : '<p style="color:var(--mu);text-align:center;padding:35px">سفارشی ثبت نکرده‌اید.</p>';
+  }
+
+  const myF = document.getElementById('myF');
+  if (myF) {
+    myF.innerHTML = favs.length
+      ? favs.map(f =>
+          '<div class="fi"><div class="fi2"><h5>' + esc(f.icon || '') + ' ' + esc(f.title) + '</h5>' +
+          '<p>نوع: ' + esc(f.type || '') + '</p></div>' +
+          '<button class="btn bd bsm" onclick="rmFav(' + f.id + ')">حذف</button></div>'
+        ).join('')
+      : '<p style="color:var(--mu);text-align:center;padding:35px">علاقه‌مندی‌ای ندارید.</p>';
+  }
+
+  const myQ = document.getElementById('myQ');
+  if (myQ) {
+    myQ.innerHTML = res.length
+      ? res.map(r =>
+          '<div class="fi"><div class="fi2"><h5>📝 ' + esc(r.title) + '</h5>' +
+          '<p>نمره: ' + fa(r.score) + '% | صحیح: ' + fa(r.correct) + ' | غلط: ' + fa(r.wrong) + ' | ' + esc(r.date || '') + '</p></div></div>'
+        ).join('')
+      : '<p style="color:var(--mu);text-align:center;padding:35px">آزمونی نداده‌اید.</p>';
+  }
+
+  const badges = [
+    { ic: '🎯', t: 'شروع', d: 'اولین ورود', g: true },
+    { ic: '📚', t: 'دانشجو', d: 'ثبت‌نام دوره', g: ids.length > 0 },
+    { ic: '❤️', t: 'علاقه‌مند', d: '۵ علاقه‌مندی', g: favs.length >= 5 },
+    { ic: '📝', t: 'آزمون‌دهنده', d: 'اولین آزمون', g: res.length > 0 },
+    { ic: '🏆', t: 'نمره بالا', d: '۸۰٪+', g: res.some(r => r.score >= 80) },
+    { ic: '🛒', t: 'خریدار', d: 'اولین سفارش', g: myO.length > 0 },
+    { ic: '💎', t: 'حرفه‌ای', d: '+۵۰۰ امتیاز', g: (curUser.points || 0) >= 500 },
+    { ic: '👑', t: 'افسانه', d: '+۱۰۰۰ امتیاز', g: (curUser.points || 0) >= 1000 }
+  ];
+  const myB = document.getElementById('myB');
+  if (myB) {
+    myB.innerHTML = badges.map(b =>
+      '<div class="bi ' + (b.g ? '' : 'lock') + '"><div class="bic">' + b.ic + '</div>' +
+      '<h5>' + b.t + '</h5><p>' + b.d + '</p></div>'
+    ).join('');
+  }
+
+  const cc = ids.length > 0 ? courses.find(c => c.id === ids[0]) : null;
+  const myCert = document.getElementById('myCert');
+  if (myCert) {
+    if (cc) {
+      const cd = new Date().toLocaleDateString('fa-IR');
+      myCert.innerHTML =
+        '<div class="cert" id="pCert"><h2>🎓 گواهی پایان دوره</h2>' +
+        '<div class="cst">CERTIFICATE OF COMPLETION</div>' +
+        '<p style="color:var(--mu);font-size:.85rem">این گواهی به اینجانب</p>' +
+        '<div class="cnm">' + esc(curUser.name) + '</div>' +
+        '<p style="color:var(--mu);font-size:.85rem">تعلق می‌گیرد بابت اتمام موفق دوره</p>' +
+        '<div class="ccr">«' + esc(cc.title) + '»</div>' +
+        '<div class="csl">🧬</div>' +
+        '<div class="cdt">تاریخ صدور: ' + cd + '</div></div>' +
+        '<div style="text-align:center;margin-top:18px">' +
+        '<button class="btn bp" onclick="printCert()">🖨️ چاپ گواهی</button></div>';
+    } else {
+      myCert.innerHTML =
+        '<p style="color:var(--mu);text-align:center;padding:35px">🎓 برای دریافت گواهی، ابتدا در یک دوره ثبت‌نام کنید.</p>';
+    }
+  }
+
+  const pn = document.getElementById('pn');
+  const pe = document.getElementById('pe');
+  const pp = document.getElementById('pp');
+  if (pn) pn.value = curUser.name || '';
+  if (pe) pe.value = curUser.email || '';
+  if (pp) pp.value = '';
 }
 
 function swUT(t, el) {
@@ -1182,13 +1526,28 @@ function rmFav(id) {
   toast('حذف شد');
 }
 
-async function savePr() {
-  if (!curUser || !authToken) return;
-  const name=document.getElementById('pn').value.trim(); const email=document.getElementById('pe').value.trim(); const password=document.getElementById('pp').value.trim();
-  try {
-    const r=await api('/me',{method:'PATCH',body:JSON.stringify({name,email,...(password?{password}: {})})});
-    curUser=r.user; saveLocalOnly(); updAuth(); toast('✓ پروفایل ذخیره شد');
-  } catch(e){ toast('❌ '+e.message,'error'); }
+function savePr() {
+  if (!isLogged()) return;
+  const n = document.getElementById('pn').value.trim();
+  const e = document.getElementById('pe').value.trim();
+  const p = document.getElementById('pp').value.trim();
+  if (!n) { toast('نام خالی است', 'error'); return; }
+  if (e && users.find(u => u.email === e && u.id !== curUser.id)) {
+    toast('این ایمیل استفاده شده', 'error');
+    return;
+  }
+  curUser.name = n;
+  curUser.email = e || curUser.email;
+  if (p) {
+    if (p.length < 4) { toast('رمز حداقل ۴ کاراکتر', 'error'); return; }
+    curUser.password = p;
+  }
+  const i = users.findIndex(u => u.id === curUser.id);
+  if (i > -1) users[i] = curUser;
+  save();
+  renderUser();
+  updAuth();
+  toast('✓ ذخیره شد');
 }
 
 function printCert() {
@@ -1213,20 +1572,7 @@ function printCert() {
 /* ============================================================
    ADMIN PANEL
 ============================================================ */
-async function renderAdmin() {
-  if (!isAdmin()) return renderAdminLocal();
-  try {
-    const [u, o] = await Promise.all([api('/admin/users'), api('/admin/orders')]);
-    if (Array.isArray(u.users)) users = u.users;
-    if (Array.isArray(o.orders)) orders = o.orders;
-    renderAdminLocal();
-  } catch (e) {
-    console.warn('Admin sync failed:', e.message);
-    renderAdminLocal();
-  }
-}
-
-function renderAdminLocal() {
+function renderAdmin() {
   const s = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = fa(v); };
   s('stC', courses.length);
   s('stV', videos.length);
@@ -1375,14 +1721,17 @@ function del(type, id) {
   toast('🗑️ حذف شد');
 }
 
-async function delU(id) {
+function delU(id) {
   if (!confirm('کاربر حذف بشه؟')) return;
-  try {
-    await api('/admin/users/' + id, {method:'DELETE'});
-    users = users.filter(x => x.id !== id);
-    if (curUser && curUser.id === id) { curUser=null; authToken=null; authRole=null; }
-    renderAdmin(); toast('🗑️ حذف شد');
-  } catch(e) { toast('❌ '+e.message,'error'); }
+  users = users.filter(x => x.id !== id);
+  if (curUser && curUser.id === id) {
+    curUser = null;
+    try { localStorage.removeItem('bcu'); } catch (e) {}
+    updAuth();
+  }
+  save();
+  renderAdmin();
+  toast('🗑️ حذف شد');
 }
 
 function viewO(id) {
@@ -1461,7 +1810,8 @@ function addP() {
   const s = prompt('حجم:', '2 MB') || '2 MB';
   const pg = parseInt(prompt('صفحه:', '50'), 10) || 50;
   const l = confirm('قفل باشد؟');
-  pdfs.push({ id: gId(), title: t.trim(), grade: g.trim(), type: ty.trim(), size: s.trim(), pages: pg, locked: l, downloads: 0, desc: '' });
+  const f = prompt('لینک فایل PDF (اختیاری):') || '';
+  pdfs.push({ id: gId(), title: t.trim(), grade: g.trim(), type: ty.trim(), size: s.trim(), pages: pg, locked: l, downloads: 0, desc: '', file: f.trim() });
   save();
   renderAdmin();
   renderPDFs();
@@ -1596,7 +1946,6 @@ window.addEventListener('popstate', loadHash);
 window.addEventListener('hashchange', loadHash);
 
 window.addEventListener('load', () => {
-  hydrateFromServer().then(() => { renderCourses(); renderVideos(); renderPDFs(); renderQuizzes(); renderBlog(); renderFAQ(); if (isAdmin()) renderAdmin(); });
   let theme = 'dark';
   try { theme = localStorage.getItem('bt') || 'dark'; } catch (e) {}
   document.body.setAttribute('data-theme', theme);
@@ -1628,6 +1977,7 @@ window.addEventListener('load', () => {
   }, 900);
 
   console.log('%c✅ آکادمی دکتر علیرضا احمدیان آماده است!', 'color:#00ffc6;font-size:14px;font-weight:bold');
+  console.log('%c🔑 ادمین: admin / 1234', 'color:#a855f7;font-size:12px');
   console.log('%c🎟️ کدها: BIO20, KONKUR30, AHMADIAN50', 'color:#a855f7;font-size:12px');
   console.log('%c💬 چت آنلاین: Goftino', 'color:#00ffc6;font-size:12px');
 });
